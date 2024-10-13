@@ -3,6 +3,7 @@ import { GetUserParamsDtos } from '../dtos/get-users-params.dto';
 
 @Injectable()
 export class UsersService {
+  //=====> findAll method
   public findAll(
     getUserParamDtos: GetUserParamsDtos,
     page: number,
@@ -20,5 +21,15 @@ export class UsersService {
         lastName: 'Doe',
       },
     ];
+  }
+
+  //=====> findOne method
+  public findOneById(id: number) {
+    return {
+      id: 1,
+      email: '',
+      firstName: 'John',
+      lastName: 'Doe',
+    };
   }
 }

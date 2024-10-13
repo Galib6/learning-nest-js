@@ -1,0 +1,11 @@
+### Get all users
+POST http://localhost:8000/posts
+Content-Type: application/json
+
+{
+  "firstName": "Joh",
+  "lastName": "Dojj",
+  "email": "galib@gmail.com",
+  "password": "your_password_Here",
+  "ddd":"virus"
+}
