@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -11,6 +12,20 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  //swagger config
+  const config = new DocumentBuilder()
+    .setTitle('Centinel-API')
+    .setDescription('User api url as localhost:8000')
+    .setTermsOfService('http://localhost:8000')
+    .addServer('http://localhost:8000')
+    .setVersion('1.0')
+    // .addTag('nestjs')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
+
   await app.listen(8000);
 }
 bootstrap();
