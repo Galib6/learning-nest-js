@@ -13,7 +13,7 @@ export class CreateUserDtos {
   @IsNotEmpty()
   @IsString()
   @MinLength(3)
-  @MaxLength(20)
+  @MaxLength(96)
   firstName: string;
 
   @IsOptional()
@@ -28,6 +28,7 @@ export class CreateUserDtos {
   email: string;
 
   @IsNotEmpty()
+  @MaxLength(96)
   @Length(8, 20)
   @Matches(/^(?=.*[a-z])(?=.*[A-Z]).*$/, {
     message:

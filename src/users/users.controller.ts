@@ -1,18 +1,6 @@
-import {
-  Body,
-  Controller,
-  DefaultValuePipe,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDtos } from './dtos/create-user.dtos';
-import { GetUserParamsDtos } from './dtos/get-users-params.dto';
 import { PatchUsersDto } from './dtos/patch-users.dto';
 import { UsersService } from './providers/users.service';
 
@@ -42,12 +30,9 @@ export class UsersController {
     description:
       'The position of the page number that you want to the API to return',
   })
-  getUsers(
-    @Param() getUserParamDtos: GetUserParamsDtos,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-  ) {
-    return this.userService.findAll(getUserParamDtos, page, limit);
+  getUsers() {
+    // @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number, // @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number, // @Param() getUserParamDtos: GetUserParamsDtos,
+    return this.userService.findAll();
   }
 
   @Post()
@@ -55,9 +40,8 @@ export class UsersController {
     @Body() createUserDto: CreateUserDtos,
     // @Headers() headers: any,
     // @Ip() ipAddress: any,
-  ): string {
-    console.log(createUserDto);
-    return `Send request to create a user`;
+  ): any {
+    return this.userService.createUser(createUserDto);
   }
 
   @Patch()

@@ -3,9 +3,8 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "firstName": "Joh",
-  "lastName": "Dojj",
+  "firstName": "Asadullah",
+  "lastName": "Al Galib",
   "email": "galib@gmail.com",
-  "password": "your_password_Here",
-  "ddd":"virus"
+  "password": "12345678@Galib"
 }
