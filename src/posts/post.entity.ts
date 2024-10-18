@@ -1,22 +1,30 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { CreateMetaPostDto } from './dtos/create-post-meta-options.dto';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+import { MetaOption } from 'src/meta-options/meta-options.entity';
+import { User } from 'src/users/user.entity';
 import { PostStatus } from './enum/postStatus.enum';
 import { PostType } from './enum/postType.enum';
 
 @Entity()
 export class Post {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({
     type: 'varchar',
     nullable: false,
-    length: 250,
+    length: 512,
   })
   title: string;
 
   @Column({
-    type: 'varchar',
+    type: 'enum',
     enum: PostType,
     nullable: false,
   })
@@ -24,13 +32,14 @@ export class Post {
 
   @Column({
     type: 'varchar',
+    length: 256,
     nullable: false,
     unique: true,
   })
   slug: string;
 
   @Column({
-    type: 'varchar',
+    type: 'enum',
     enum: PostStatus,
     nullable: false,
   })
@@ -43,7 +52,7 @@ export class Post {
   content?: string;
 
   @Column({
-    type: 'varchar',
+    type: 'text',
     nullable: true,
   })
   schema?: string;
@@ -51,24 +60,31 @@ export class Post {
   @Column({
     type: 'varchar',
     nullable: false,
+    length: 1024,
   })
   featuredImageUrl?: string;
 
   @Column({
-    type: 'timestamptz',
-    nullable: false,
-    default: () => 'CURRENT_TIMESTAMP',
+    type: 'timestamp',
+    nullable: true,
   })
   publishedOn: Date;
 
-  @Column({
-    type: 'text',
-    array: true,
-    nullable: true,
-  })
-  @Column({
-    type: 'jsonb',
-    nullable: true,
-  })
-  metaOptions?: CreateMetaPostDto[];
+  @OneToOne(
+    /**annotation of creating relation */
+    () => MetaOption,
+    /**Defining the property */
+    (metaOptions) => metaOptions.post,
+    /**cascade and populate , for populate user eger: true */
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  metaOptions?: MetaOption;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  author: User;
+
+  tags: string[];
 }

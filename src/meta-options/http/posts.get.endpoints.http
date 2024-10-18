@@ -1,0 +1,4 @@
+### Get all users
+GET http://localhost:8000/posts
+?page=8
+&limit=0

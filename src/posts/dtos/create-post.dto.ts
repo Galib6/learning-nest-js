@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
+  IsInt,
   IsISO8601,
   IsJSON,
   IsNotEmpty,
@@ -10,12 +11,14 @@ import {
   IsString,
   IsUrl,
   Matches,
+  MaxLength,
   MinLength,
   ValidateNested,
 } from 'class-validator';
+
+import { CreateMetaOptionsDto } from 'src/meta-options/dtos/create-meta-options.dto';
 import { PostStatus } from '../enum/postStatus.enum';
 import { PostType } from '../enum/postType.enum';
-import { CreateMetaPostDto } from './create-post-meta-options.dto';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -26,6 +29,7 @@ export class CreatePostDto {
   })
   @IsString()
   @MinLength(4)
+  @MaxLength(512)
   @IsNotEmpty()
   title: string;
 
@@ -47,6 +51,7 @@ export class CreatePostDto {
   })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(256)
   @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
     message:
       'Slug can only contain lowercase alphanumeric characters and hyphens.',
@@ -88,6 +93,7 @@ export class CreatePostDto {
   })
   @IsOptional()
   @IsUrl()
+  @MaxLength(1024)
   featuredImageUrl?: string;
 
   @ApiPropertyOptional({
@@ -111,28 +117,29 @@ export class CreatePostDto {
 
   @ApiPropertyOptional({
     description: 'Array of meta options',
-    type: 'array',
-    items: {
-      type: 'object',
-      properties: {
-        key: {
-          type: 'string',
-          description:
-            'The string can be any string identifier for your meta option',
-          example: 'sidebarEnabled',
-        },
-        value: {
-          type: 'any',
-          description:
-            'Any value can be passed as a meta option value. For example, a boolean value',
-          example: true,
-        },
+    type: 'object',
+    properties: {
+      metaValue: {
+        type: 'json',
+        description:
+          'The string can be any string identifier for your meta option',
+        example: "{'/sidebarEnabled'/ : true}",
       },
     },
   })
   @IsOptional()
-  @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CreateMetaPostDto)
-  metaOptions?: CreateMetaPostDto[];
+  @Type(() => CreateMetaOptionsDto)
+  metaOptions?: CreateMetaOptionsDto | null;
+
+  @ApiProperty({
+    description: 'author id',
+    example: '1',
+    type: 'number',
+    required: true,
+  })
+  @IsNotEmpty()
+  @IsInt()
+  @Type(() => Number)
+  authorId?: number;
 }

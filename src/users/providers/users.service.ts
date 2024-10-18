@@ -37,9 +37,6 @@ export class UsersService {
   }
 
   public findAll() {
-    // limit: number, // page: number, // getUserParamDtos: GetUserParamsDtos,
-    const isAuth = this.authService.isAuth();
-    console.log(isAuth);
     return [
       {
         email: 'mockuser@example.com',
@@ -55,11 +52,6 @@ export class UsersService {
   }
 
   public findOneById(id: number) {
-    return {
-      id: 1,
-      email: '',
-      firstName: 'John',
-      lastName: 'Doe',
-    };
+    return this.usersRepository.findOneBy({ id: id });
   }
 }

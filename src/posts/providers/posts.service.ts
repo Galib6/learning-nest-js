@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/providers/users.service';
 import { Repository } from 'typeorm';
@@ -8,39 +8,43 @@ import { Post } from '../post.entity';
 @Injectable()
 export class PostsService {
   constructor(
+    /**Injecting User service */
     private readonly usersService: UsersService,
 
+    /**Injecting post repository service */
     @InjectRepository(Post)
     private postsRepository: Repository<Post>,
+
+    /**Injecting metaOption repository */
+    // @InjectRepository(MetaOption)
+    // private metaOptionsRepository: Repository<MetaOption>,
   ) {}
 
-  public createPost = async (createPost: CreatePostDto) => {
-    const existingSlug = await this.postsRepository.findOne({
-      where: {
-        slug: createPost?.slug,
-      },
+  public createPost = async (createPostDto: CreatePostDto) => {
+    // find author
+    const author = await this.usersService.findOneById(createPostDto.authorId);
+    /** creating post */
+    let post = this.postsRepository.create({
+      ...createPostDto,
+      author: author,
     });
-
-    if (existingSlug) throw new BadRequestException('Slug invalid');
-
-    let post = this.postsRepository.create(createPost);
     post = await this.postsRepository.save(post);
     return post;
   };
 
-  public findAll(id: number) {
-    const user = this.usersService.findOneById(id);
-    return [
-      {
-        user: user,
-        title: 'Post 1',
-        content: 'This is a post',
+  public async findAll(id: number) {
+    // const user = this.usersService.findOneById(id);
+    const posts = await this.postsRepository.find({
+      relations: {
+        // metaOptions: true,
+        author: true,
       },
-      {
-        user: user,
-        title: 'Post 2',
-        content: 'This is another post',
-      },
-    ];
+    });
+    return posts;
+  }
+
+  public async delete(id: number) {
+    await this.postsRepository.delete(id);
+    return { deleted: true, id };
   }
 }

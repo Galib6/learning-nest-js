@@ -1,0 +1,7 @@
+### Get all users
+POST http://localhost:8000/meta-options
+Content-Type: application/json
+
+{
+  "metaValue" : "{\"sidebarENabled\": true}"
+}
