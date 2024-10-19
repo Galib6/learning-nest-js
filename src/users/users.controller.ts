@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateUserDtos } from './dtos/create-user.dtos';
+import { CreateManyUserDto } from './dtos/create-many-users.dto';
+import { CreateUserDto } from './dtos/create-user.dtos';
 import { PatchUsersDto } from './dtos/patch-users.dto';
 import { UsersService } from './providers/users.service';
 
@@ -37,11 +38,20 @@ export class UsersController {
 
   @Post()
   createUser(
-    @Body() createUserDto: CreateUserDtos,
+    @Body() createUsersDto: CreateUserDto,
     // @Headers() headers: any,
     // @Ip() ipAddress: any,
   ): any {
-    return this.userService.createUser(createUserDto);
+    return this.userService.createUser(createUsersDto);
+  }
+
+  @Post('create-many')
+  createManyUser(
+    @Body() createManyUsersDto: CreateManyUserDto,
+    // @Headers() headers: any,
+    // @Ip() ipAddress: any,
+  ): any {
+    return this.userService.createMany(createManyUsersDto);
   }
 
   @Patch()

@@ -5,15 +5,16 @@ Content-Type: application/json
 {
   "title": "string",
   "postType": "story",
-  "slug": "stringp-dsss0bmbnmbnmbmbnbnm",
+  "slug": "stringp-dsss0bmbnmbnmbmbnbnm-ss",
   "status": "draft",
   "content": "string",
   "schema": "{\"message\":\"schema must be a json string\"}",
   "featuredImageUrl": "https://i0.wp.com/d604h6pkko9r0.cloudfront.net/wp-content/uploads/2021/03/29113740/nextjs-cover-jpg-webp.webp?fit=1000%2C582&ssl=1",
   "publishedOn": "2020-07-10 15:00:00.000",
-  // "tags": ["string"],
+  "tags": [1,3],
   "metaOptions": {
     "metaValue" : "{\"sidebarEnabled\" : true}"
   },
   "authorId": 43
+
 }

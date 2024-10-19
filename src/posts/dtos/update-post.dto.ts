@@ -3,7 +3,7 @@ import { IsInt, IsNotEmpty } from 'class-validator';
 import { CreatePostDto } from './create-post.dto';
 
 // export class postUpdateDto extends PartialType(OmitType(CreatePostDto, [])) {}
-export class patchPostDto extends PartialType(CreatePostDto) {
+export class PatchPostDto extends PartialType(CreatePostDto) {
   @ApiProperty({
     description: 'Id and post that needs to be updated',
     example: 0,
@@ -11,5 +11,5 @@ export class patchPostDto extends PartialType(CreatePostDto) {
   })
   @IsInt()
   @IsNotEmpty()
-  id: string;
+  id: number;
 }

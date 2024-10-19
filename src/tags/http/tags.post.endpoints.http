@@ -1,0 +1,11 @@
+### Get all users
+POST http://localhost:8000/tags
+Content-Type: application/json
+
+{
+  "name": "science",
+  "slug": "my-first-post-dd",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  // "schema": "string",
+  // "featuredImageUrl": "string"
+}

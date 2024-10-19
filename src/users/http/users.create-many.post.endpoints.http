@@ -1,0 +1,32 @@
+### Get all users
+POST http://localhost:8000/users/create-many
+Content-Type: application/json
+
+{
+  "users" :[
+  {
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john@gdoxzczxdde.com",
+  "password": "12345678@Galib"
+  },
+  {
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john@gdoddxcve.com",
+  "password": "12345678@Galib"
+  },
+  {
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john@gdxcvodde.com",
+  "password": "12345678@Galib"
+  },
+  {
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john@gdxcvxodde.com",
+  "password": "12345678@Galib"
+  }
+]
+}
