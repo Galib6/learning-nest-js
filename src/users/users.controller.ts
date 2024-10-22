@@ -56,7 +56,6 @@ export class UsersController {
 
   @Patch()
   updateUser(@Body() patchUserDtos: PatchUsersDto): string {
-    console.log(patchUserDtos);
     return `Send request to update a user`;
   }
 

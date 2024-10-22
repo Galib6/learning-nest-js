@@ -4,10 +4,13 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Paginated } from 'src/common/pagination/interfaces/paginated.interface';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination';
 import { TagsService } from 'src/tags/providers/tags.service';
 import { UsersService } from 'src/users/providers/users.service';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from '../dtos/create-post.dto';
+import { GetPostDto } from '../dtos/get-post-dtos';
 import { PatchPostDto } from '../dtos/update-post.dto';
 import { Post } from '../post.entity';
 
@@ -31,6 +34,9 @@ export class PostsService {
     /**Injecting tags repository */
     // @InjectRepository(Tag)
     // private tagsRepository: Repository<Tag>,
+
+    //pagination provider
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   public createPost = async (createPostDto: CreatePostDto) => {
@@ -50,16 +56,16 @@ export class PostsService {
     return post;
   };
 
-  public async findAll(id: number) {
-    // const user = this.usersService.findOneById(id);
-    const posts = await this.postsRepository.find({
-      relations: {
-        // metaOptions: true,
-        // author: true,
-        // tags: true,
-      },
-    });
-    return posts;
+  public async findAll(
+    postQuery: GetPostDto,
+    userId: number,
+  ): Promise<Paginated<Post>> {
+    const result = await this.paginationProvider.paginationQuery<Post>(
+      { limit: postQuery?.limit, page: postQuery?.page },
+      this.postsRepository,
+    );
+
+    return result;
   }
 
   public async update(patchPostDto: PatchPostDto) {

@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dtos/create-post.dto';
+import { GetPostDto } from './dtos/get-post-dtos';
 import { PatchPostDto } from './dtos/update-post.dto';
 import { PostsService } from './providers/posts.service';
 
@@ -21,8 +22,11 @@ export class PostsController {
 
   //=====> GET HTTP method ================>
   @Get('/:userId?')
-  public async findByUser(@Param('userId') userId: number) {
-    return this.postsService.findAll(userId);
+  public async findByUser(
+    @Param('userId') userId: number,
+    @Query() getPostDto: GetPostDto,
+  ) {
+    return this.postsService.findAll(getPostDto, userId);
   }
 
   //=====> POST HTTP method ================>

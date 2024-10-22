@@ -10,6 +10,11 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      //conversion type
+      /**used for string type to number type */
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
 
