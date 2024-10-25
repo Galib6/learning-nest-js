@@ -1,0 +1,8 @@
+### Get all users
+POST http://localhost:8000/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "john@gdoe.com",
+  "password": "12345678@Galib"
+}

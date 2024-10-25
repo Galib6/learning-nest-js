@@ -3,11 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import profileConfig from './config/profile.config';
+import { CreateUserProvider } from './providers/create-user.provider';
+import { FindOneUserByEmailProvider } from './providers/find-one-user.provider';
+import { UserCreateManyProvider } from './providers/user-create-many.provider';
 import { UsersService } from './providers/users.service';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
-
-import { UserCreateManyProvider } from './providers/user-create-many.provider';
 
 @Module({
   imports: [
@@ -16,7 +17,13 @@ import { UserCreateManyProvider } from './providers/user-create-many.provider';
     ConfigModule.forFeature(profileConfig),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UserCreateManyProvider, UserCreateManyProvider],
+  providers: [
+    UsersService,
+    UserCreateManyProvider,
+    UserCreateManyProvider,
+    CreateUserProvider,
+    FindOneUserByEmailProvider,
+  ],
   exports: [UsersService],
 })
 export class UsersModule {}

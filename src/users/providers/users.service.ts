@@ -9,12 +9,14 @@ import {
 } from '@nestjs/common';
 import { ConfigService, ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthService } from 'src/auth/auth/providers/auth.service';
+import { AuthService } from 'src/auth/providers/auth.service';
 import { DataSource, Repository } from 'typeorm';
 import profileConfig from '../config/profile.config';
 import { CreateManyUserDto } from '../dtos/create-many-users.dto';
 import { CreateUserDto } from '../dtos/create-user.dtos';
 import { User } from '../user.entity';
+import { CreateUserProvider } from './create-user.provider';
+import { FindOneUserByEmailProvider } from './find-one-user.provider';
 import { UserCreateManyProvider } from './user-create-many.provider';
 
 @Injectable()
@@ -39,34 +41,16 @@ export class UsersService {
 
     //inject create many provider
     private readonly userCreateManyProvider: UserCreateManyProvider,
+
+    //inject create user provider
+    private readonly createUserProvider: CreateUserProvider,
+
+    //find one user by email provider
+    private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
-    let userExist;
-    try {
-      userExist = await this.usersRepository.findOne({
-        where: { email: createUserDto.email },
-      });
-    } catch {
-      throw new RequestTimeoutException('Unable to process request', {
-        description: 'Error connecting to the database',
-      });
-    }
-
-    if (userExist) {
-      throw new BadRequestException('User already exists');
-    }
-
-    let newUser = this.usersRepository.create(createUserDto);
-
-    try {
-      newUser = await this.usersRepository.save(newUser);
-    } catch {
-      throw new RequestTimeoutException('Unable to process request', {
-        description: 'Error connecting to the database',
-      });
-    }
-    return newUser;
+    return this.createUserProvider.createUser(createUserDto);
   }
 
   public findAll() {
@@ -116,5 +100,9 @@ export class UsersService {
 
   public async createMany(createManyUsersDto: CreateManyUserDto) {
     return this.userCreateManyProvider.createMany(createManyUsersDto);
+  }
+
+  public async findOneByEmail(email: string) {
+    return this.findOneUserByEmailProvider.findOneByEmail(email);
   }
 }
