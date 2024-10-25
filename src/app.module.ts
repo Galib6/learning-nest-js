@@ -9,6 +9,7 @@ import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
+import { PermissionsModule } from './permissions/permissions.module';
 import { PostsModule } from './posts/posts.module';
 import { TagsModule } from './tags/tags.module';
 import { UsersModule } from './users/users.module';
@@ -22,6 +23,7 @@ const ModulesImports = [
   TagsModule,
   MetaOptionsModule,
   PaginationModule,
+  PermissionsModule,
 ];
 
 @Module({
@@ -48,8 +50,19 @@ const ModulesImports = [
         database: configService.get('database.name'),
       }),
     }),
+    // ConfigModule.forFeature(jwtConfig),
+    // JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AppController],
-  providers: [AppService, PaginationModule],
+  providers: [
+    AppService,
+    PaginationModule,
+
+    /** Global authentication guards */
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AccessTokenGuard,
+    // },
+  ],
 })
 export class AppModule {}

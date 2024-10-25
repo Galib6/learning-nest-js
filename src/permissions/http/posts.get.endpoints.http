@@ -1,0 +1,12 @@
+{{
+    const date = new Date();
+    exports.startDate = date.toString()
+    exports.endDate= date.toString()
+}}
+
+### Get all users
+GET http://localhost:8000/posts
+?startDate={{startDate}}
+&endDate= {{endDate}}
+&page=1
+&limit=2

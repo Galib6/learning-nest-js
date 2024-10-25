@@ -1,6 +1,7 @@
 ### Get all users
 POST http://localhost:8000/users/create-many
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMiwiZW1haWwiOiJqb2huQGdkb2UuY29tIiwiaWF0IjoxNzI5ODc1NTYwLCJleHAiOjE3Mjk4NzkxNjAsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.wTcrnVy3W7v2T6NsR5_RxSYZko-E3SSEi_d31Uo8usk
 
 {
   "users" :[
@@ -12,7 +13,7 @@ Content-Type: application/json
   },
   {
   "firstName": "John",
-  "lastName": "Doe",
+  "lastName": "Doe", 
   "email": "john@gdoddxcve.com",
   "password": "12345678@Galib"
   },

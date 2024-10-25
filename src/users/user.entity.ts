@@ -1,5 +1,12 @@
+import { Permission } from 'src/permissions/permission.entity';
 import { Post } from 'src/posts/post.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -37,4 +44,7 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
+
+  @ManyToOne(() => Permission, (permission) => permission.user)
+  permission: Permission;
 }
