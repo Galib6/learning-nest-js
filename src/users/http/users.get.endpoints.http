@@ -2,3 +2,8 @@
 GET http://localhost:8000/users/
 ?page=8
 &limit=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyOCwiZW1haWwiOiJqb2huQGdkb2UuY29tIiwiaWF0IjoxNzI5OTQ5NzY3LCJleHAiOjE3Mjk5NTMzNjcsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.1rl1f7DqD3pAv0OHjlQbM4hv4Ha8-OujC_hrCJYV9lM
+
+
+

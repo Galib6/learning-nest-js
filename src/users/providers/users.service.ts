@@ -1,8 +1,6 @@
 import {
   BadRequestException,
   forwardRef,
-  HttpException,
-  HttpStatus,
   Inject,
   Injectable,
   RequestTimeoutException,
@@ -12,9 +10,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { DataSource, Repository } from 'typeorm';
 import profileConfig from '../config/profile.config';
+import { AssignPermissionDtos } from '../dtos/assign-permission-dto';
 import { CreateManyUserDto } from '../dtos/create-many-users.dto';
 import { CreateUserDto } from '../dtos/create-user.dtos';
 import { User } from '../user.entity';
+import { AssignPermissionProvider } from './assign-permission.provider';
 import { CreateUserProvider } from './create-user.provider';
 import { FindOneUserByEmailProvider } from './find-one-user.provider';
 import { UserCreateManyProvider } from './user-create-many.provider';
@@ -47,6 +47,9 @@ export class UsersService {
 
     //find one user by email provider
     private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
+
+    //Assign role provider
+    private readonly assignPermissionProvider: AssignPermissionProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -54,19 +57,6 @@ export class UsersService {
   }
 
   public findAll() {
-    throw new HttpException(
-      {
-        status: HttpStatus.MOVED_PERMANENTLY,
-        error: "API DOESN'T EXISTS",
-        fileName: 'User.service.ts',
-        lineNumber: 69,
-      },
-      HttpStatus.MOVED_PERMANENTLY,
-      {
-        cause: new Error(),
-        description: 'Occurred because the api end point moved',
-      },
-    );
     return [
       {
         email: 'mockuser@example.com',
@@ -104,5 +94,9 @@ export class UsersService {
 
   public async findOneByEmail(email: string) {
     return this.findOneUserByEmailProvider.findOneByEmail(email);
+  }
+
+  public async assignPermission(assignPermissionDtos: AssignPermissionDtos) {
+    return this.assignPermissionProvider.assign(assignPermissionDtos);
   }
 }

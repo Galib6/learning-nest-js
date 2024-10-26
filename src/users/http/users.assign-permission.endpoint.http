@@ -1,0 +1,9 @@
+### Assign Permission
+POST http://localhost:8000/users/assign-permission
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyOCwiZW1haWwiOiJqb2huQGdkb2UuY29tIiwiaWF0IjoxNzI5OTI3MjQ1LCJleHAiOjE3Mjk5MzA4NDUsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ._sjCeRKdTEYhNyak2WBitcVrMcYwfEv1URw9aJm4vXM
+
+{
+  "id" : 128,
+  "permissionIds": [1,2]
+}

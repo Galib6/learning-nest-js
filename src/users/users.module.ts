@@ -2,7 +2,9 @@ import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
+import { Permission } from 'src/permissions/permission.entity';
 import profileConfig from './config/profile.config';
+import { AssignPermissionProvider } from './providers/assign-permission.provider';
 import { CreateUserProvider } from './providers/create-user.provider';
 import { FindOneUserByEmailProvider } from './providers/find-one-user.provider';
 import { UserCreateManyProvider } from './providers/user-create-many.provider';
@@ -13,7 +15,7 @@ import { UsersController } from './users.controller';
 @Module({
   imports: [
     forwardRef(() => AuthModule),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Permission]),
     ConfigModule.forFeature(profileConfig),
   ],
   controllers: [UsersController],
@@ -23,6 +25,7 @@ import { UsersController } from './users.controller';
     UserCreateManyProvider,
     CreateUserProvider,
     FindOneUserByEmailProvider,
+    AssignPermissionProvider,
   ],
   exports: [UsersService],
 })

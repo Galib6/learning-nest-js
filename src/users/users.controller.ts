@@ -1,8 +1,18 @@
-import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Permission } from 'src/permissions/decorators/permission.decorator';
+import { PermissionGuard } from 'src/permissions/guards/permission/permission.guard';
+import { AssignPermissionDtos } from './dtos/assign-permission-dto';
 import { CreateManyUserDto } from './dtos/create-many-users.dto';
 import { CreateUserDto } from './dtos/create-user.dtos';
-import { PatchUsersDto } from './dtos/patch-users.dto';
 import { UsersService } from './providers/users.service';
 
 @ApiTags('Users')
@@ -31,6 +41,8 @@ export class UsersController {
     description:
       'The position of the page number that you want to the API to return',
   })
+  @UseGuards(PermissionGuard)
+  @Permission('sdfsd')
   getUsers() {
     // @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number, // @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number, // @Param() getUserParamDtos: GetUserParamsDtos,
     return this.userService.findAll();
@@ -55,12 +67,19 @@ export class UsersController {
   }
 
   @Patch()
-  updateUser(@Body() patchUserDtos: PatchUsersDto): string {
+  updateUser() // @Body() _patchUserDtos: PatchUsersDto
+  : string {
     return `Send request to update a user`;
   }
 
   @Delete()
   deleteUser(): string {
     return `Send request to delete a user`;
+  }
+
+  @ApiOperation({ summary: 'Assign permission to user' })
+  @Post('assign-permission')
+  assignPermission(@Body() assignPermissionDtos: AssignPermissionDtos) {
+    return this.userService.assignPermission(assignPermissionDtos);
   }
 }

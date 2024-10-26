@@ -3,7 +3,8 @@ import { Post } from 'src/posts/post.entity';
 import {
   Column,
   Entity,
-  ManyToOne,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -45,6 +46,7 @@ export class User {
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
 
-  @ManyToOne(() => Permission, (permission) => permission.user)
-  permission: Permission;
+  @ManyToMany(() => Permission, (permission) => permission.users)
+  @JoinTable()
+  permissions: Permission[];
 }
