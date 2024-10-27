@@ -1,17 +1,8 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/auth/decorators/access-token.decorator';
 import { AuthType } from 'src/auth/enums/enum';
 import { Permission } from 'src/permissions/decorators/permission.decorator';
-import { PermissionGuard } from 'src/permissions/guards/permission/permission.guard';
 import { AssignPermissionDtos } from './dtos/assign-permission-dto';
 import { CreateManyUserDto } from './dtos/create-many-users.dto';
 import { CreateUserDto } from './dtos/create-user.dtos';
@@ -43,15 +34,14 @@ export class UsersController {
     description:
       'The position of the page number that you want to the API to return',
   })
-  @UseGuards(PermissionGuard)
-  @Permission('sdfsd')
   getUsers() {
     // @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number, // @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number, // @Param() getUserParamDtos: GetUserParamsDtos,
     return this.userService.findAll();
   }
 
   @Post()
-  @Auth(AuthType.None, AuthType.Bearer)
+  @Auth(AuthType.None)
+  @Permission('string')
   createUser(
     @Body() createUsersDto: CreateUserDto,
     // @Headers() headers: any,

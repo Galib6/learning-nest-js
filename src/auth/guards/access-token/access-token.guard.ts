@@ -32,7 +32,6 @@ export class AccessTokenGuard implements CanActivate {
 
     const token = this.extractRequestFormHeader(request);
     //validate the token
-
     if (!token) {
       throw new UnauthorizedException();
     }

@@ -14,9 +14,11 @@ import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
+import { PermissionGuard } from './permissions/guards/permission/permission.guard';
 import { PermissionsModule } from './permissions/permissions.module';
 import { PostsModule } from './posts/posts.module';
 import { TagsModule } from './tags/tags.module';
+import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 
 const ENV = process.env.NODE_ENV;
@@ -59,6 +61,8 @@ const ModulesImports = [
     // jwt access for token guard imports
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
+    //For permission Guards
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AppController],
   providers: [
@@ -71,6 +75,7 @@ const ModulesImports = [
       useClass: AuthenticationGuard,
     },
     AccessTokenGuard,
+    PermissionGuard,
   ],
 })
 export class AppModule {}

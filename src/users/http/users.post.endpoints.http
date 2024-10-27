@@ -1,6 +1,7 @@
 ### Get all users
 POST http://localhost:8000/users
 Content-Type: application/json
+ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyOCwiZW1haWwiOiJqb2huQGdkb2UuY29tIiwiaWF0IjoxNzMwMDQxMzUxLCJleHAiOjE3MzM2NDEzNTEsImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.u_ZE2vmY9Yn3StqfJRgTqeWXJerGtfIo8dHjb9uY9eI
 
 {
   "firstName": "John",

@@ -7,7 +7,10 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
-import { REQUEST_USER_KEY } from 'src/auth/constants/auth.constants';
+import {
+  PERMISSION_KEY,
+  REQUEST_USER_KEY,
+} from 'src/auth/constants/auth.constants';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 
@@ -20,9 +23,9 @@ export class PermissionGuard implements CanActivate {
     private readonly userRepository: Repository<User>,
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredPermission = this.reflector.get<string>(
-      'permission',
-      context.getHandler(),
+    const requiredPermission = this.reflector.getAllAndOverride(
+      PERMISSION_KEY,
+      [context.getHandler(), context.getClass()],
     );
 
     const request = context.switchToHttp().getRequest();
@@ -37,6 +40,8 @@ export class PermissionGuard implements CanActivate {
         .where('user.id = :userId', { userId })
         .andWhere('permission.name = :name', { name: requiredPermission })
         .getOne();
+
+      console.log(request[REQUEST_USER_KEY]);
     } catch {
       throw new RequestTimeoutException('Unable to process', {
         description: 'Please try again later',
