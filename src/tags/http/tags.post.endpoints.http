@@ -1,10 +1,11 @@
 ### Get all users
 POST http://localhost:8000/tags
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyOCwiZW1haWwiOiJqb2huQGdkb2UuY29tIiwiaWF0IjoxNzMwMjE1OTE5LCJleHAiOjE3MzM4MTU5MTksImF1ZCI6ImxvY2FsaG9zdDo4MDAwIiwiaXNzIjoibG9jYWxob3N0OjgwMDAifQ.jM6DM4iH8dIXN6rr6WMuDBGVNy15hW7b0djbIKpcFXU
 
 {
   "name": "science",
-  "slug": "my-first-post-dd",
+  "slug": "my-first-pt-dd",
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   // "schema": "string",
   // "featuredImageUrl": "string"

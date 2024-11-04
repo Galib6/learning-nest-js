@@ -8,6 +8,7 @@ import { UsersModule } from 'src/users/users.module';
 import { Post } from './post.entity';
 import { PostsController } from './posts.controller';
 import { PostsService } from './providers/posts.service';
+import { CreatePostProvider } from './providers/create-post.provider';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { PostsService } from './providers/posts.service';
     PaginationModule,
     TypeOrmModule.forFeature([Post, MetaOption, Tag]),
   ],
-  providers: [PostsService],
+  providers: [PostsService, CreatePostProvider],
   controllers: [PostsController],
 })
 export class PostsModule {}

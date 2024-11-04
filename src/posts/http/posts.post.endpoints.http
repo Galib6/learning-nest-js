@@ -1,20 +1,19 @@
 ### Get all users
 POST http://localhost:8000/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE0MiwiZW1haWwiOiJqb2huQGdzZG9lLmNvbSIsImlhdCI6MTczMDIxOTA3OCwiZXhwIjoxNzMzODE5MDc4LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.bCBQ98Bz_PF5W0kCyOpOQC90YVN4PfpOYyXuKWy0yd8
 
 {
   "title": "string",
   "postType": "story",
-  "slug": "stringp-dsss0bmbnmbnmbmbnbnm-ss",
+  "slug": "stringp-dxcvxazxczxcvxcxcsxcvsss",
   "status": "draft",
   "content": "string",
   "schema": "{\"message\":\"schema must be a json string\"}",
   "featuredImageUrl": "https://i0.wp.com/d604h6pkko9r0.cloudfront.net/wp-content/uploads/2021/03/29113740/nextjs-cover-jpg-webp.webp?fit=1000%2C582&ssl=1",
-  "publishedOn": "2020-07-10 15:00:00.000",
-  "tags": [1,3],
+  "publishedOn": "2021-01-01T00:00:00.000Z",
+  "tags": [4, 7],
   "metaOptions": {
-    "metaValue" : "{\"sidebarEnabled\" : true}"
-  },
-  "authorId": 43
-
+    "metaValue": "{\"sidebarEnabled\": true}"
+  }
 }

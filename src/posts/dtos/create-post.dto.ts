@@ -4,7 +4,6 @@ import {
   IsArray,
   IsEnum,
   IsInt,
-  IsISO8601,
   IsJSON,
   IsNotEmpty,
   IsOptional,
@@ -101,7 +100,7 @@ export class CreatePostDto {
     example: '2021-01-01T00:00:00.000Z',
   })
   @ApiProperty()
-  @IsISO8601()
+  // @IsISO8601()
   @IsOptional()
   publishedOn: Date;
 
@@ -130,15 +129,4 @@ export class CreatePostDto {
   @ValidateNested({ each: true })
   @Type(() => CreateMetaOptionsDto)
   metaOptions?: CreateMetaOptionsDto | null;
-
-  @ApiProperty({
-    description: 'author id',
-    example: '1',
-    type: 'number',
-    required: true,
-  })
-  @IsNotEmpty()
-  @IsInt()
-  @Type(() => Number)
-  authorId?: number;
 }

@@ -1,8 +1,5 @@
 import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorators/access-token.decorator';
-import { AuthType } from 'src/auth/enums/enum';
-import { Permission } from 'src/permissions/decorators/permission.decorator';
 import { AssignPermissionDtos } from './dtos/assign-permission-dto';
 import { CreateManyUserDto } from './dtos/create-many-users.dto';
 import { CreateUserDto } from './dtos/create-user.dtos';
@@ -40,8 +37,6 @@ export class UsersController {
   }
 
   @Post()
-  @Auth(AuthType.None)
-  @Permission('string')
   createUser(
     @Body() createUsersDto: CreateUserDto,
     // @Headers() headers: any,

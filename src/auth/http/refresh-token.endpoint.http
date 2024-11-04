@@ -1,0 +1,7 @@
+### Get all users
+POST http://localhost:8000/auth/refresh-tokens
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE0MiwiZW1haWwiOiJqb2huQGdzZG9lLmNvbSIsImlhdCI6MTczMDMwNTYyNiwiZXhwIjoxNzMwMzA5MjI2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.fRwecvt_upKY3GnpV1WMacv__j3gYBzHlnCDYQVsXYE"
+}

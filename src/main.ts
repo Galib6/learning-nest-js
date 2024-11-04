@@ -25,12 +25,13 @@ async function bootstrap() {
     .setTermsOfService('http://localhost:8000')
     .addServer('http://localhost:8000')
     .setVersion('1.0')
-    // .addTag('nestjs')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
+  app.enableCors();
   await app.listen(8000);
 }
 bootstrap();

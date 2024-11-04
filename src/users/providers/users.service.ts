@@ -1,43 +1,42 @@
 import {
   BadRequestException,
-  forwardRef,
-  Inject,
   Injectable,
   RequestTimeoutException,
 } from '@nestjs/common';
-import { ConfigService, ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthService } from 'src/auth/providers/auth.service';
-import { DataSource, Repository } from 'typeorm';
-import profileConfig from '../config/profile.config';
+import { Repository } from 'typeorm';
 import { AssignPermissionDtos } from '../dtos/assign-permission-dto';
 import { CreateManyUserDto } from '../dtos/create-many-users.dto';
+import { CreateSocialUserDto } from '../dtos/create-social-users.dtos.';
 import { CreateUserDto } from '../dtos/create-user.dtos';
 import { User } from '../user.entity';
 import { AssignPermissionProvider } from './assign-permission.provider';
+import { CreateSocialUserProvider } from './create-social-user.provider';
 import { CreateUserProvider } from './create-user.provider';
+
+import { FindSocialUserByEmailProvider } from './find-one-by-google-id.provider';
 import { FindOneUserByEmailProvider } from './find-one-user.provider';
 import { UserCreateManyProvider } from './user-create-many.provider';
 
 @Injectable()
 export class UsersService {
   constructor(
-    // circular dependency
-    @Inject(forwardRef(() => AuthService))
-    private readonly authService: AuthService,
+    // // circular dependency
+    // @Inject(forwardRef(() => AuthService))
+    // private readonly authService: AuthService,
 
     @InjectRepository(User)
     private usersRepository: Repository<User>,
 
-    // injecting config service
-    private readonly configService: ConfigService,
+    // // injecting config service
+    // private readonly configService: ConfigService,
 
-    // injecting config service
-    @Inject(profileConfig.KEY)
-    private readonly profileConfiguration: ConfigType<typeof profileConfig>,
+    // // injecting config service
+    // @Inject(profileConfig.KEY)
+    // private readonly profileConfiguration: ConfigType<typeof profileConfig>,
 
-    //inject data source
-    private readonly dataSource: DataSource,
+    // //inject data source
+    // private readonly dataSource: DataSource,
 
     //inject create many provider
     private readonly userCreateManyProvider: UserCreateManyProvider,
@@ -50,6 +49,12 @@ export class UsersService {
 
     //Assign role provider
     private readonly assignPermissionProvider: AssignPermissionProvider,
+
+    //find one by google id provider inject
+    private readonly findSocialUserByEmailProvider: FindSocialUserByEmailProvider,
+
+    //find one by google id provider inject
+    private readonly createSocialUserProvider: CreateSocialUserProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -98,5 +103,13 @@ export class UsersService {
 
   public async assignPermission(assignPermissionDtos: AssignPermissionDtos) {
     return this.assignPermissionProvider.assign(assignPermissionDtos);
+  }
+
+  public async findSocialUserByEmail(email: string) {
+    return this.findSocialUserByEmailProvider.findOneBySocialUserByEmail(email);
+  }
+
+  public async createSocialUser(createSocialUserDto: CreateSocialUserDto) {
+    return this.createSocialUserProvider.createGoogleUser(createSocialUserDto);
   }
 }

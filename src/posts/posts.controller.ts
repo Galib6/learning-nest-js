@@ -10,6 +10,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
+import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { GetPostDto } from './dtos/get-post-dtos';
 import { PatchPostDto } from './dtos/update-post.dto';
@@ -36,8 +38,11 @@ export class PostsController {
     description: 'You get a 201 response if your post is created successfully',
   })
   @Post()
-  public async createPost(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.createPost(createPostDto);
+  public async createPost(
+    @Body() createPostDto: CreatePostDto,
+    @ActiveUser() user: IActiveUser,
+  ) {
+    return this.postsService.create(createPostDto, user);
   }
 
   //=====> PATCH HTTP method ================>

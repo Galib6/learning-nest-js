@@ -4,6 +4,7 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IActiveUser } from 'src/auth/interfaces/active-user.interface';
 import { Paginated } from 'src/common/pagination/interfaces/paginated.interface';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination';
 import { TagsService } from 'src/tags/providers/tags.service';
@@ -13,6 +14,7 @@ import { CreatePostDto } from '../dtos/create-post.dto';
 import { GetPostDto } from '../dtos/get-post-dtos';
 import { PatchPostDto } from '../dtos/update-post.dto';
 import { Post } from '../post.entity';
+import { CreatePostProvider } from './create-post.provider';
 
 @Injectable()
 export class PostsService {
@@ -37,23 +39,14 @@ export class PostsService {
 
     //pagination provider
     private readonly paginationProvider: PaginationProvider,
+
+    //create post provider
+
+    private readonly createPostProvider: CreatePostProvider,
   ) {}
 
-  public createPost = async (createPostDto: CreatePostDto) => {
-    // find author
-    const author = await this.usersService.findOneById(createPostDto.authorId);
-
-    //find tags
-    const tags = await this.tagsService.findMultipleTags(createPostDto.tags);
-
-    /** creating post */
-    let post = this.postsRepository.create({
-      ...createPostDto,
-      author: author,
-      tags: tags,
-    });
-    post = await this.postsRepository.save(post);
-    return post;
+  public create = async (createPostDto: CreatePostDto, user: IActiveUser) => {
+    return this.createPostProvider.create(createPostDto, user);
   };
 
   public async findAll(
